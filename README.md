@@ -10,7 +10,8 @@ is going to happen:
 +   You wanna move down, but line joins;
 +   You try to undo those joins, but it undo itself;
 +   ...
-So lots of vimmers disabled the capslock or map it to another key.
+
+So, lots of vimmers disabled the capslock or map it to another key.
 Yes, that is a beautiful solution. I don't like capslock too.
 But someday, I notice that the capslock is still useful,
 ---if you have to use an on screen keyboard (e.g., with a touch screen)
@@ -19,6 +20,6 @@ Toggle off the capslock when back to normal mode,
 ---that is what this plugin do.
 
 `vimcaps` now only support windows, linux support will be added later.
-Since I don't have a mac, there won't be any mac support until someone
+Since I don't have a mac, there *won't* be any mac support until someone
 send a pull request. :)
 

@@ -11,18 +11,30 @@ let g:vimcaps_loaded = 1
 
 function vimcaps#querystatus()
     " return 1 if capslock is on, 0 if off;
+    if has("win32") || has("win64") || has("win32unix")
+        " for windows
+    elseif has("mac") || has("macunix")
+        " for mac
+    elseif has("unix")
+    endif
     return 1
 endfunction
 
 function vimcaps#sendkeys()
     " send a `capslock press` keyevent to toggle the status.
+    if has("win32") || has("win64") || has("win32unix")
+        " for windows
+    elseif has("mac") || has("macunix")
+        " for mac
+    elseif has("unix")
+    endif
 endfunction
 
 function vimcaps#toggleoff()
     if vimcaps#querystatus() == 1
         call vimcaps#sendkeys()
     endif
-    echo "Toggle off"
+    " echo "Toggle off"
 endfunction
 
 " enable by default, if you don't want it be enabled, add
