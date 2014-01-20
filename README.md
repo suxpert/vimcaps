@@ -23,6 +23,9 @@ Toggle off the capslock when back to normal mode,
 Since I don't have a mac, there *won't* be any mac support until someone
 send a pull request. :)
 
+You may consider to [vote this plugin](http://www.vim.org/scripts/script.php?script_id=4834)
+if you think it is useful, or just feels like it. Thanks!
+
 ## Install
 It is highly recommended to use an addon manager for vim plugins.
 
@@ -33,7 +36,9 @@ For vundle user, add the following line into your `vimrc`:
 ```vim
 Bundle 'suxpert/vimcaps'
 ```
-If you use `vam`, add `github:suxpert/vimcaps` to your
+If you use `vam`, you may active this plugin by the name `vimcaps`,
+it will download this plugin from vim.org.
+To use the up-to-date version here, add `github:suxpert/vimcaps` to your
 `ActivateAddons` list, or add
 ```vim
 call vam#ActivateAddons('github:suxpert/vimcaps')

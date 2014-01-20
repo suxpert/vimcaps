@@ -4,7 +4,7 @@
 "               as well as a "complete control" over the keyboard event.
 "               (The 0.0.x version is windows only)
 " Author:       LiTuX <suxpert AT gmail DOT com>
-" Last Change:  2014-01-20 17:20:46
+" Last Change:  2014-01-20 17:48:49
 " Version:      0.0.2
 "
 " Install:      unpack all into your plugin folder, that's all.
@@ -14,7 +14,7 @@
 " Usage:        No further configuration is needed to use this plugin,
 "               it will automatically handle your capslock:
 "               when "InsertLeave", "BufferWinEnter" and "FocusGained",
-"               "vimcaps" will toggle off it to prevent unwanted commands.
+"               "vimcaps" will toggle it off to prevent unwanted commands.
 "
 "               You can use the functions that vimcaps offered, to do
 "               some cool stuff. As an example, see "vimcaps#dance()",
