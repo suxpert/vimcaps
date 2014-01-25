@@ -4,7 +4,7 @@
 "               as well as a "complete control" over the keyboard event.
 "               (The 0.0.x version is windows only)
 " Author:       LiTuX <suxpert AT gmail DOT com>
-" Last Change:  2014-01-25 19:05:45
+" Last Change:  2014-01-25 21:22:43
 " Version:      0.0.3
 "
 " Install:      unpack all into your plugin folder, that's all.
@@ -65,7 +65,7 @@ elseif has("win64")
     let s:vimcaps_lib = s:vimcaps_path."\\".s:vimcaps_libname."-x64.dll"
 elseif has("win32unix")
     " win32unix can be x86 (msys1, msys2/x86) or x64 (msys2/x64)...
-    " Since I have no better way to determine which plantform we are in,
+    " Since I have no better way to determine which platform we are in,
     " We'll use try blocks for that.
     try
         let s:vimcaps_lib = s:vimcaps_path."/".s:vimcaps_libname."-x86.dll"
