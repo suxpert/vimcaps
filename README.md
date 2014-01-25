@@ -65,15 +65,15 @@ Here `N` is a mask, can be a combination of:
 
 If N is negative, the result will have a fixed width. For example.
 `vimcaps#statusline(-3)` by default will return
-> "     NUM" if capslock is off and number lock is on, or
-> "CAPS NUM" if both of them are toggled, or even
-> "        " if both are off.
++ "     NUM" if capslock is off and number lock is on, or
++ "CAPS NUM" if both of them are toggled, or even
++ "        " if both are off.
 
 The display style and separator is controled by `g:vimcaps_status_style`
 and `g:vimcaps_status_separator`. Three build-in styles are:
-> 'upper': show as "CAPS", "NUM", "SCRL" (default)
-> 'lower': show as "caps", "num", "scrl"
-> 'short': show as "C", "N", "S"
++ 'upper': show as "CAPS", "NUM", "SCRL" (default)
++ 'lower': show as "caps", "num", "scrl"
++ 'short': show as "C", "N", "S"
 
 If you are using `powerline` or `airline`, read the manual about how to
 modify its statusline.
