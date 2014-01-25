@@ -4,8 +4,8 @@
 "               as well as a "complete control" over the keyboard event.
 "               (The 0.0.x version is windows only)
 " Author:       LiTuX <suxpert AT gmail DOT com>
-" Last Change:  2014-01-20 17:48:49
-" Version:      0.0.2
+" Last Change:  2014-01-25 19:05:45
+" Version:      0.0.3
 "
 " Install:      unpack all into your plugin folder, that's all.
 "               If you are using "vundle" or "vim-addons-manager",
@@ -16,7 +16,28 @@
 "               when "InsertLeave", "BufferWinEnter" and "FocusGained",
 "               "vimcaps" will toggle it off to prevent unwanted commands.
 "
-"               You can use the functions that vimcaps offered, to do
+"               Starting from 0.0.3, vimcaps provide a function for
+"               statusline: vimcaps#statusline(), which allows to display
+"               the keyboard lock status in your statusline.
+"
+"               You'll need to add this to your "statusline" to enable it:
+"                   set stl=...%{vimcaps#statusline(N)}...
+"               where N is a mask, can be a combination of:
+"                   1 for capslock; 2 for numlock; 4 for scrollock;
+"               if N is negative, space is added when lock is off;
+"
+"               It checks "g:vimcaps_status_style" for the name style,
+"               which can be (default is upper)
+"                   'upper': "CAPS", "NUM", "SCRL"
+"                   'lower': "caps", "num", "scrl"
+"                   'short': "C", "N", "S"
+"               and "g:vimcaps_status_separator" for the separator.
+"               For example, vimcaps#statusline(-3) by default will return
+"               "     NUM" if capslock is off and number lock is on, or
+"               "CAPS NUM" if both of them are toggled, or even
+"               "        " if both are off.
+"
+"               You can also use the functions that vimcaps offered, to do
 "               some cool stuff. As an example, see "vimcaps#dance()",
 "               which flash the capslock LED for a while.
 "               You can test it via ":call vimcaps#dance(5)",
@@ -24,6 +45,8 @@
 "               Of course you can interrupt it by "Ctrl-C". Have fun!
 "
 " Changes:
+"       0.0.3:  Add "vimcaps#statusline()" function for showing the
+"               keyboard lock status in statusline.
 "       0.0.2:  Optimize functions, add "vimcaps#dance()" for fun.
 "               Add high level functions for numlock and scrollock.
 "       0.0.1:  initial upload, windows only, ready to use.
@@ -79,11 +102,11 @@ catch /^Vim\%((\a\+)\)\=:E364/
 endtry
 
 function s:whichlock( name )
-    if a:name =~ 'capslock'
+    if a:name == 1 || a:name =~ 'capslock'
         let which = 1
-    elseif a:name =~ 'numlock'
+    elseif a:name == 2 || a:name =~ 'numlock'
         let which = 2
-    elseif a:name =~ 'scrollock'
+    elseif a:name == 4 || a:name =~ 'scrollock'
         let which = 4
     else    " no such lock
         let which = 0
@@ -190,6 +213,47 @@ function vimcaps#dance( timeout )
         " clean up, turn off capslock
         call vimcaps#toggleoff()
     endtry
+endfunction
+
+if !exists("g:vimcaps_status_style")
+    let g:vimcaps_status_style = "upper"
+endif
+if !exists("g:vimcaps_status_separator")
+    let g:vimcaps_status_separator = " "
+endif
+
+" TODO: vimcaps#statusline() now can NOT update until statusline redraws.
+" It ought to force a update whenever one of the locks is toggled.
+function! vimcaps#statusline(N)
+    let names = {}
+    let names["upper"] = [["    ","CAPS"], ["   ","NUM"], ["    ","SCRL"]]
+    let names["lower"] = [["    ","caps"], ["   ","num"], ["    ","scrl"]]
+    let names["short"] = [[" ", "C"], [" ", "N"], [" ", "S"]]
+    let sep = g:vimcaps_status_separator
+    if a:N < 0
+        let fixed = 1
+        let which = -a:N
+    else
+        let fixed = 0
+        let which = a:N
+    endif
+    if has_key(names, g:vimcaps_status_style)
+        let style = g:vimcaps_status_style
+    else
+        let style = "upper"
+    endif
+
+    let result = ""
+    let locks = [1, 2, 4]               " capslock, numlock, scrollock
+    for i in range(3)
+        if and(which, locks[i])
+            let state = s:lockstate(locks[i])
+            let this_state = (fixed||state)? names[style][i][state] : ""
+            let result .= len(result)&&len(this_state) ? sep : ""   " TODO
+            let result .= this_state
+        endif
+    endfor
+    return result
 endfunction
 
 " enable by default, if you don't want it be enabled, add

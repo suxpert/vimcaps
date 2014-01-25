@@ -23,7 +23,7 @@ Toggle off the capslock when back to normal mode,
 Since I don't have a mac, there *won't* be any mac support until someone
 send a pull request. :)
 
-You may consider to [vote this plugin](http://www.vim.org/scripts/script.php?script_id=4834)
+You may consider to [rate this plugin](http://www.vim.org/scripts/script.php?script_id=4834)
 if you think it is useful, or just feels like it. Thanks!
 
 ## Install
@@ -51,6 +51,38 @@ for you:
 `vimcaps` register autocmd for toggle off the capslock when
 `InsertLeave`, `BufferWinEnter` and `FocusGained`.
 Note that FocusGained *may* don't work if you are under a terminal.
+
+Starting from 0.0.3, `vimcaps` provide a function `vimcaps#statusline()`
+in order to display the keyboard locks status on the statusline.
+You'll need to add it to your statusline settings to enable it.
+```vim
+set stl=...%{vimcaps#statusline(N)}...
+```
+Here `N` is a mask, can be a combination of:
++ 1 for capslock;
++ 2 for numlock;
++ 4 for scrollock;
+
+If N is negative, the result will have a fixed width. For example.
+`vimcaps#statusline(-3)` by default will return
+> "     NUM" if capslock is off and number lock is on, or
+> "CAPS NUM" if both of them are toggled, or even
+> "        " if both are off.
+
+The display style and separator is controled by `g:vimcaps_status_style`
+and `g:vimcaps_status_separator`. Three build-in styles are:
+> 'upper': show as "CAPS", "NUM", "SCRL" (default)
+> 'lower': show as "caps", "num", "scrl"
+> 'short': show as "C", "N", "S"
+
+If you are using `powerline` or `airline`, read the manual about how to
+modify its statusline.
+
+`vimcaps#statusline()` now can **NOT** update until statusline redraws.
+Though it ought to force a update whenever one of the locks is toggled.
+If you know how to do this (for example, how to send a command or
+whatever to vim whenever a `xxLock KeyDown` event happens without the
+`--remote-send` commands), **Please help me to improve this plugin**.
 
 If you have some better suggestions, **please tell me**, perhaps it
 will be the default setting in a next version. :)

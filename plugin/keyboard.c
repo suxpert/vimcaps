@@ -1,12 +1,14 @@
 /* keyboard.c: Keyboard event for vimcaps
  * Copyright (C) 2010-2014 LiTuX, all wrongs reserved.
  *
+ * Last Change: 2014-01-21 20:31:26
+ *
  * This file is part of vimcaps, most of the code came from my libmkbd
  * To compile this file, you need a compiler such as gcc, cl, or even tcc.
  * For WinSDK/VC user: open a cmd with environment setting (vcvars), then
- *  \> cl /nologo /W4 /LD <thisfile> /link user32.lib /out kbdevt-xXX.dll
+ *  \> cl /nologo /W4 /LD <thisfile> /link user32.lib /out keyboard-xXX.dll
  * For MinGW/MSYS user: open a cmd with environment or login to bash, then
- *  $ gcc -Wall -shared <thisfile> -l user32.lib -o kbdevt-xXX.dll
+ *  $ gcc -Wall -shared <thisfile> -l user32.lib -o keyboard-xXX.dll
  * If you're using TinyCC, the command is almost the same as for gcc.
  * */
 
