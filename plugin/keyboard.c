@@ -1,7 +1,7 @@
 /* keyboard.c: Keyboard event for vimcaps
  * Copyright (C) 2010-2014 LiTuX, all wrongs reserved.
  *
- * Last Change: 2014-02-15 16:45:01
+ * Last Change: 2014-02-15 18:27:26
  *
  * This file is part of vimcaps, a layer for `calling` APIs with libcall.
  * The library provides some low-level functions similar to system APIs
@@ -200,14 +200,14 @@ void xkbd_fini(void)
 
 int xMaskedState( unsigned mask )
 {
-    int state = 0;
+    unsigned int state = 0;
     XkbGetIndicatorState(display, XkbUseCoreKbd, &state);
     return state & mask;
 }
 
 int xAtom(const char * const name)
 {
-    return XInternAtom(display, name, 0)
+    return XInternAtom(display, name, 0);
 }
 
 int xGetState(unsigned atom)

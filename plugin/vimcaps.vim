@@ -2,14 +2,17 @@
 " Script Title: vimcaps: never be bothered by the capslock again.
 " Description:  Toggle off capslock when back to normal mode or gain focus,
 "               as well as a "complete control" over the keyboard event.
-"               (The 0.0.x version is windows only)
+"               (The 0.0.x version is windows only, complete control is
+"               windows only too.)
 " Author:       LiTuX <suxpert AT gmail DOT com>
-" Last Change:  2014-02-15 16:21:03
-" Version:      0.0.3
+" Last Change:  2014-02-15 20:52:29
+" Version:      0.1.0
 "
 " Install:      unpack all into your plugin folder, that's all.
 "               If you are using "vundle" or "vim-addons-manager",
 "               see README at "https://github.com/suxpert/vimcaps".
+"               For linux user, you'll need gcc and Xlib to compile
+"               the library (manually or let vimcaps do it)
 "
 " Usage:        No further configuration is needed to use this plugin,
 "               it will automatically handle your capslock:
@@ -45,6 +48,7 @@
 "               Of course you can interrupt it by "Ctrl-C". Have fun!
 "
 " Changes:
+"       0.1.0:  Add xWindow support, now vimcaps works on linux (under X).
 "       0.0.3:  Add "vimcaps#statusline()" function for showing the
 "               keyboard lock status in statusline.
 "       0.0.2:  Optimize functions, add "vimcaps#dance()" for fun.
@@ -56,6 +60,8 @@ if exists("g:vimcaps_loaded")
     finish
 endif
 let g:vimcaps_loaded = 1
+
+let s:vimcaps_undertty = 0
 
 let s:vimcaps_path = expand("<sfile>:p:h")
 let s:vimcaps_libname = "keyboard"
@@ -81,7 +87,7 @@ elseif has("unix")
     " Linux support is under testing.
     let s:vimcaps_lib = s:vimcaps_path."/".s:vimcaps_libname.".so"
     if getftime(s:vimcaps_lib) < getftime(s:vimcaps_src)
-        silent !cd s:vimcaps_path && make
+        silent exe "!cd ".s:vimcaps_path." && make"
     endif
 else
     " vimcaps now do not support your platform, sorry.
@@ -104,7 +110,20 @@ catch /^Vim\%((\a\+)\)\=:E364/
     echohl None
     finish
 finally
-    if libstatus != 1
+    if libstatus == 1
+        " ready to use.
+    elseif libstatus == 0
+        " Seems that we are under TTY, TODO
+        let s:vimcaps_tty = system("ps -C ps|awk '/ps/{print $2}'")
+        if s:vimcaps_tty =~ 'tty\d'
+            " silent exe '!setleds -L</dev/'.s:vimcaps_tty
+            let s:vimcaps_undertty = 1
+        endif
+        echohl WarningMsg
+        echo "TTY is not yet supported"
+        echohl None
+        finish
+    else
         echohl WarningMsg
         echo "Library Error, vimcaps can not load!"
         echohl None
@@ -138,7 +157,11 @@ function s:lockstate( which )
         " for mac
         let ret = -1
     elseif has("unix")
-        let ret = libcallnr(s:vimcaps_lib, "LockToggled", which)
+        if s:vimcaps_undertty == 0
+            let ret = libcallnr(s:vimcaps_lib, "LockToggled", which)
+        else
+            " TODO
+        endif
     endif
     return ret
 endfunction

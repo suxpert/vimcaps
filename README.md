@@ -19,7 +19,9 @@ Then I decide to do a simple thing instead of remap the keyboard:
 Toggle off the capslock when back to normal mode,
 ---that is what this plugin do.
 
-`vimcaps` now only support Windows, Linux support will be added later.
+`vimcaps` now support Windows and Linux (actually xWindow, we need Xlib),
+TTYs are still not supported.
+BSD hasn't been tested, suggestions are welcomed.
 Since I don't have a mac, there *won't* be any mac support until someone
 send a pull request. :)
 
@@ -44,6 +46,16 @@ To use the up-to-date version here, add `github:suxpert/vimcaps` to your
 call vam#ActivateAddons('github:suxpert/vimcaps')
 ```
 to your `vimrc`.
+
+For Linux user, you need to compile the library manually, or let vimcaps
+compile it automatically. make, gcc, Xlib must be installed first.
+Linux support **may** have some bug (Although according to my test,
+only with such a strange way can vimcaps work.
+I'm using ubuntu 13.10 and a logitech small keyboard and onboard BTW).
+What we need to know is that, xWindow have a `shift lock` modifier.
+I don't know if such a lock exists on a physical keyboard or not,
+but Xlib functions can't change onboard's shift lock.
+So this shift lock is still a problem.
 
 ## Usage
 After install, this plugin will automatically handle the capslock

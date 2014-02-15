@@ -10,12 +10,14 @@ You may offer help if you can. :)
 
     - [x] Windows support works.
 
-    - [ ] Linux support:
-        xWindow (libX11) under testing, If you can offer help,
-        send me a pull request or even some tips.
-        For commands: `xset` can get the status, but need X (libX11);
-        `setleds` do not need X, but failed on my test.
-        I'll try ioctl() later.
+    - [-] Linux support:
+        xWindow (libX11) support (partly) works.
+        If you meet issues, please help me to improve this.
+        TTY is still not supported
+
+    - [ ] BSD support:
+        Since BSD can have xWindow, thus I think it may work.
+        But most BSD don't have X installed.
 
     - [ ] OS X support:
         I've found such APIs: `CGEventCreateKeyboardEvent`,
@@ -35,7 +37,7 @@ You may offer help if you can. :)
         the lock key is down, not up). But I don't know how to tell vim
         to refresh the statusline.
 
-    - [ ] Linux support.
+    - [ ] Linux (and BSD?) support.
         An xWindow program can listen to the `capslock` KeyDown event,
         but I don't know if a shared library can do this or not.
         Also, the library still need to tell vim to refresh the statusline.
