@@ -1,7 +1,7 @@
 /* keyboard.c: Keyboard event for vimcaps
  * Copyright (C) 2010-2014 LiTuX, all wrongs reserved.
  *
- * Last Change: 2014-02-15 15:27:50
+ * Last Change: 2014-02-15 16:45:01
  *
  * This file is part of vimcaps, a layer for `calling` APIs with libcall.
  * The library provides some low-level functions similar to system APIs
@@ -307,7 +307,7 @@ int LockToggled( int lock )
      *  4 for scrollock;
      * */
     int result;
-#ifdef __WIN32
+#ifdef _WIN32
     int vKey = 0;
     switch (lock) {
         case 1: // caps
@@ -322,7 +322,7 @@ int LockToggled( int lock )
         default: // do nothing
             break;
     }
-    result = 1 & GetState( vKey );
+    result = 1 & (int) GetState( vKey );
 #elif __APPLE__
 #elif __linux__
     Atom which;
@@ -350,7 +350,7 @@ int ToggleOn( int lock )
 {
     int result;
     if ( !LockToggled(lock) ) {
-#ifdef __WIN32
+#ifdef _WIN32
         result = ToggleLock(lock);
 #elif __APPLE__
 #elif __linux__
@@ -366,7 +366,7 @@ int ToggleOff( int lock )
 {
     int result;
     if ( LockToggled(lock) ) {
-#ifdef __WIN32
+#ifdef _WIN32
         result = ToggleLock(lock);
 #elif __APPLE__
 #elif __linux__

@@ -4,7 +4,7 @@
 "               as well as a "complete control" over the keyboard event.
 "               (The 0.0.x version is windows only)
 " Author:       LiTuX <suxpert AT gmail DOT com>
-" Last Change:  2014-02-15 16:12:17
+" Last Change:  2014-02-15 16:21:03
 " Version:      0.0.3
 "
 " Install:      unpack all into your plugin folder, that's all.
@@ -248,7 +248,7 @@ endfunction
 " An example of control the capslock, just for fun.
 function vimcaps#dance( timeout )
     call vimcaps#capsoff()
-    call vimcaps#srcloff()
+    call vimcaps#scrloff()
     try
         for time in range(a:timeout)
             sleep 100m
