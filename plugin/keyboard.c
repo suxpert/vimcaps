@@ -1,7 +1,7 @@
 /* keyboard.c: Keyboard event for vimcaps
  * Copyright (C) 2010-2014 LiTuX, all wrongs reserved.
  *
- * Last Change: 2014-02-15 18:27:26
+ * Last Change: 2014-02-16 10:33:24
  *
  * This file is part of vimcaps, a layer for `calling` APIs with libcall.
  * The library provides some low-level functions similar to system APIs
@@ -273,8 +273,11 @@ int xLockModifier(unsigned mask)
 {
     /* This one works on my system, but can only modify caps/num lock.
      * where caps lock is 0x02(2) and num lock is 0x10(16):
-     * TODO: linux man page info here;
-     * But I don't know which is scroll lock. :(
+     * 8 Real Modifier Masks from man page: (1, 2, 4, 8, 16, 32, 64, 128)
+     *  ShiftMask   LockMask    ControlMask     Mod1Mask
+     *  Mod2Mask    Mod3Mask    Mod4Mask        Mod5Mask
+     * It seems that none of them is scroll lock.
+     * BTW the shiftmask seems to be a lock too.
      * */
     return XkbLockModifiers(display, XkbUseCoreKbd, mask, mask);
 }
