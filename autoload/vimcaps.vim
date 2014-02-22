@@ -4,7 +4,7 @@
 "               as well as a "complete control" over the keyboard event.
 "               (complete control is now windows only.)
 " Author:       LiTuX <suxpert AT gmail DOT com>
-" Last Change:  2014-02-22 15:11:19
+" Last Change:  2014-02-22 15:30:40
 " Version:      0.1.1
 "===========================================================================
 
@@ -18,6 +18,7 @@ let s:vimcaps_undertty = 0
 let s:vimcaps_path = expand("<sfile>:p:h")
 let s:vimcaps_libname = "keyboard"
 let s:vimcaps_src = s:vimcaps_path."/".s:vimcaps_libname.".c"
+
 if has("win32")
     let s:vimcaps_lib = s:vimcaps_path."\\".s:vimcaps_libname."-x86.dll"
 elseif has("win64")
@@ -36,7 +37,7 @@ elseif has("mac") || has("macunix")
     " vimcaps now do not support mac, sorry. (It can be done AFAIK).
     finish
 elseif has("unix")
-    " Linux support is under testing.
+    " Linux support: x window MIGHT works.
     let s:vimcaps_lib = s:vimcaps_path."/".s:vimcaps_libname.".so"
     if getftime(s:vimcaps_lib) < getftime(s:vimcaps_src)
         silent exe "!cd ".s:vimcaps_path." && make"
@@ -66,9 +67,10 @@ finally
         " ready to use.
     elseif s:libstatus == 0
         " Seems that we are under TTY, TODO
-        let s:vimcaps_tty = system("ps -C ps|awk '/ps/{print $2}'")
+        let s:vimcaps_tty = system("ps -s |awk '/ps/{print $2}'")
         if s:vimcaps_tty =~ 'tty\d'
             " silent exe '!setleds -L</dev/'.s:vimcaps_tty
+            " setleds failed in my test: TTY have a keyboard state itself?
             let s:vimcaps_undertty = 1
         endif
         echohl WarningMsg
@@ -133,6 +135,7 @@ function vimcaps#scroll_state()
     return s:lockstate('scrollock')
 endfunction
 
+" TODO: This function is now windows only.
 function s:togglelock( which )
     " send a `xxxlock press` keyevent to toggle the status.
     let which = s:whichlock(a:which)
@@ -186,6 +189,8 @@ function vimcaps#toggleoff()
     endif
 endfunction
 
+
+" Some `high level` functions.
 function vimcaps#capson()
     silent call s:toggleon('capslock')
 endfunction
@@ -250,13 +255,6 @@ function vimcaps#dance( timeout )
     endtry
 endfunction
 
-if !exists("g:vimcaps_status_style")
-    let g:vimcaps_status_style = "upper"
-endif
-if !exists("g:vimcaps_status_separator")
-    let g:vimcaps_status_separator = " "
-endif
-
 " TODO: vimcaps#statusline() now can NOT update until statusline redraws.
 " It ought to force a update whenever one of the locks is toggled.
 function! vimcaps#statusline(N)
@@ -290,14 +288,4 @@ function! vimcaps#statusline(N)
     endfor
     return result
 endfunction
-
-" enable by default, if you don't want it be enabled, add
-" :let g:vimcaps_disable_autocmd = 1
-" to your vimrc, or uninstall this plugin. :)
-if !exists('g:vimcaps_disable_autocmd') || g:vimcaps_disable_autocmd == 1
-    augroup vimcaps
-        au!
-        autocmd BufWinEnter,InsertLeave,FocusGained * call vimcaps#capsoff()
-    augroup END
-endif
 
