@@ -4,14 +4,9 @@
 "               as well as a "complete control" over the keyboard event.
 "               (complete control is now windows only.)
 " Author:       LiTuX <suxpert AT gmail DOT com>
-" Last Change:  2014-02-22 15:30:40
+" Last Change:  2014-02-22 16:07:08
 " Version:      0.1.1
 "===========================================================================
-
-if exists("g:vimcaps_loaded")
-    finish
-endif
-let g:vimcaps_loaded = 1
 
 let s:vimcaps_undertty = 0
 

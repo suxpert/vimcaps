@@ -4,7 +4,7 @@
 "               as well as a "complete control" over the keyboard event.
 "               (complete control is now windows only.)
 " Author:       LiTuX <suxpert AT gmail DOT com>
-" Last Change:  2014-02-22 15:15:47
+" Last Change:  2014-02-22 16:07:02
 " Version:      0.1.1
 "
 " Install:      unpack all into your plugin folder, that's all.
@@ -57,6 +57,11 @@
 "       0.0.1:  initial upload, windows only, ready to use.
 "===========================================================================
 
+if exists("g:vimcaps_loaded")
+    finish
+endif
+let g:vimcaps_loaded = 1
+
 if !exists("g:vimcaps_status_style")
     let g:vimcaps_status_style = "upper"
 endif
@@ -67,7 +72,7 @@ endif
 " enable by default, if you don't want it be enabled, add
 " :let g:vimcaps_disable_autocmd = 1
 " to your vimrc, or uninstall this plugin. :)
-if !exists('g:vimcaps_disable_autocmd') || g:vimcaps_disable_autocmd == 1
+if !exists('g:vimcaps_disable_autocmd') || g:vimcaps_disable_autocmd == 0
     augroup vimcaps
         au!
         autocmd BufWinEnter,InsertLeave,FocusGained * call vimcaps#capsoff()
