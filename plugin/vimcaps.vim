@@ -101,18 +101,18 @@ if !filereadable(s:vimcaps_lib)
     finish
 endif
 
-let libstatus = -1
+let s:libstatus = -1
 try
-    silent let libstatus = libcallnr(s:vimcaps_lib, "LibReady", 0)
+    silent let s:libstatus = libcallnr(s:vimcaps_lib, "LibReady", 0)
 catch /^Vim\%((\a\+)\)\=:E364/
     echohl WarningMsg
     echo "Can not call library function, vimcaps can not load!"
     echohl None
     finish
 finally
-    if libstatus == 1
+    if s:libstatus == 1
         " ready to use.
-    elseif libstatus == 0
+    elseif s:libstatus == 0
         " Seems that we are under TTY, TODO
         let s:vimcaps_tty = system("ps -C ps|awk '/ps/{print $2}'")
         if s:vimcaps_tty =~ 'tty\d'
