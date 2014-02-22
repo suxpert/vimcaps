@@ -5,8 +5,8 @@
 "               (The 0.0.x version is windows only, complete control is
 "               windows only too.)
 " Author:       LiTuX <suxpert AT gmail DOT com>
-" Last Change:  2014-02-15 20:52:29
-" Version:      0.1.0
+" Last Change:  2014-02-22 14:25:04
+" Version:      0.1.1
 "
 " Install:      unpack all into your plugin folder, that's all.
 "               If you are using "vundle" or "vim-addons-manager",
@@ -48,6 +48,7 @@
 "               Of course you can interrupt it by "Ctrl-C". Have fun!
 "
 " Changes:
+"       0.1.1:  Add option to disable the default autocmd.
 "       0.1.0:  Add xWindow support, now vimcaps works on linux (under X).
 "       0.0.3:  Add "vimcaps#statusline()" function for showing the
 "               keyboard lock status in statusline.
@@ -339,10 +340,12 @@ function! vimcaps#statusline(N)
 endfunction
 
 " enable by default, if you don't want it be enabled, add
-" :let g:vimcaps_loaded = 1
-" to your vimrc, or just uninstall this plugin. :)
-augroup vimcaps
-    au!
-    autocmd BufWinEnter,InsertLeave,FocusGained * call vimcaps#capsoff()
-augroup END
+" :let g:vimcaps_disable_autocmd = 1
+" to your vimrc, or uninstall this plugin. :)
+if !exists('g:vimcaps_disable_autocmd') || g:vimcaps_disable_autocmd == 1
+    augroup vimcaps
+        au!
+        autocmd BufWinEnter,InsertLeave,FocusGained * call vimcaps#capsoff()
+    augroup END
+endif
 

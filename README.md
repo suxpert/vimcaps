@@ -103,19 +103,20 @@ whatever to vim whenever a `xxLock KeyDown` event happens without the
 If you have some better suggestions, **please tell me**, perhaps it
 will be the default setting in a next version. :)
 
-If you don't want that happen, add `let g:vimcaps_loaded = 1` to your
-vimrc, or uninstall this plugin; If you think you need some of the functions
-this plugin offered, and do NOT need it to control your capslock,
-you may modify the script file, and please **tell me** that, thanks!
+If you don't want `vimcaps` change your keyboard state,
+add `let g:vimcaps_disable_autocmd = 1` to your vimrc,
+or uninstall this plugin.
 
 ## Finally
 Actually, to support `capslock` status should be quite easy, almost all
 editors support this, but `vim` don't! So I have to write this plugin.
-With the help of some input APIs, I made it work under windows (and will
-work under Linux or even Mac OS). But, there are still issues for this
+With the help of some input APIs, I made it work under windows
+(and x window, Linux TTY and Mac OS X is not yet supported).
+But, there are still issues for this
 method: currently I can't deal with a `capslock` toggle in normal mode,
 which I think should at least give a warning,
 but I have no way to do that right now.
+See [TODO](TODO.md) for details.
 
 I wish, perhaps someday, this function will be integrated within vim,
 and this plugin become useless then.
