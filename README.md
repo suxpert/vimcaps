@@ -39,11 +39,12 @@ For vundle user, add the following line into your `vimrc`:
 Bundle 'suxpert/vimcaps'
 ```
 If you use `vam`, you may active this plugin by the name `vimcaps`,
-it will download this plugin from vim.org.
-To use the up-to-date version here, add `github:suxpert/vimcaps` to your
-`ActivateAddons` list, or add
+~~it will download this plugin from vim.org~~
+`vam` now have this repo in its database, thus we won't need to
+use the `github:` prefix now, what we need to do is just
+add `vimcaps` to your `ActivateAddons` list, or add
 ```vim
-call vam#ActivateAddons('github:suxpert/vimcaps')
+call vam#ActivateAddons('vimcaps')
 ```
 to your `vimrc`.
 
