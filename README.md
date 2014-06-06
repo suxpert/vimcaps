@@ -36,8 +36,10 @@ The most convenient way to install this plugin is use `vundle` or
 
 For vundle user, add the following line into your `vimrc`:
 ```vim
-Bundle 'suxpert/vimcaps'
+Plugin 'suxpert/vimcaps'
 ```
+then `:PluginInstall` in vim.
+
 If you use `vam`, you may active this plugin by the name `vimcaps`,
 ~~it will download this plugin from vim.org~~
 `vam` now have this repo in its database, thus we won't need to
