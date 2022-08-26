@@ -14,10 +14,10 @@ let s:vimcaps_path = expand("<sfile>:p:h")
 let s:vimcaps_libname = "keyboard"
 let s:vimcaps_src = s:vimcaps_path."/".s:vimcaps_libname.".c"
 
-if has("win32")
-    let s:vimcaps_lib = s:vimcaps_path."\\".s:vimcaps_libname."-x86.dll"
-elseif has("win64")
+if has("win64")
     let s:vimcaps_lib = s:vimcaps_path."\\".s:vimcaps_libname."-x64.dll"
+elseif has("win32")
+    let s:vimcaps_lib = s:vimcaps_path."\\".s:vimcaps_libname."-x86.dll"
 elseif has("win32unix")
     " win32unix can be x86 (msys1, msys2/x86) or x64 (msys2/x64)...
     " Since I have no better way to determine which platform we are in,
